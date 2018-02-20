@@ -33,10 +33,12 @@ module Middleman
         paths.each do |p|
           begin
             dst = destination_path(p)
+            next dont_convert(dst) if @options.disallow_overwrite && File.exist?(dst)
             exec_convert_tool(p, dst)
             yield File.new(p), File.new(dst.to_s)
           rescue StandardError => e
-            @builder.trigger :error, "Converting #{p} failed", "#{e.to_s}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}"
+            @builder.trigger :error, "Converting #{p} failed", "#{e.to_s}\n"\
+              "Backtrace:\n\t#{e.backtrace.join("\n\t")}"
           end
         end
       end
@@ -56,6 +58,10 @@ module Middleman
       def reject_file(file)
         @builder.trigger :deleted, "#{file.path} skipped"
         File.unlink(file)
+      end
+
+      def dont_convert(file)
+        @builder.trigger :identical, "#{file} already exists, skipped"
       end
 
       def print_summary
