@@ -36,7 +36,7 @@ module Middleman
             exec_convert_tool(p, dst)
             yield File.new(p), File.new(dst.to_s)
           rescue StandardError => e
-            @builder.trigger :error, "Converting #{p} failed", e.backtrace
+            @builder.trigger :error, "Converting #{p} failed", "#{e.to_s}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}"
           end
         end
       end
