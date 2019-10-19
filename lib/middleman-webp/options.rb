@@ -4,7 +4,7 @@ module Middleman
   module WebP
     class Options
       attr_reader :ignore, :verbose, :append_extension, :allow_skip,
-        :run_before_build
+        :run_before_build, :disallow_overwrite
 
       def initialize(options = {})
         @ignore = options[:ignore] || []
@@ -23,6 +23,7 @@ module Middleman
         @append_extension = options[:append_extension] || false
         @allow_skip = !(false == options[:allow_skip])
         @run_before_build = options[:run_before_build] || false
+        @disallow_overwrite = !(false == options[:disallow_overwrite])
       end
 
       # Internal: Generate command line args for cwebp or gif2webp command

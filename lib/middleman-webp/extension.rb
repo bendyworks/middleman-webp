@@ -22,6 +22,8 @@ module Middleman
            'their source')
     option(:run_before_build, false, 'Run before build and save .webp files in'\
            ' source dir')
+    option(:disallow_overwrite, false, 'Prevent existing .webp files with' \
+           ' matching filenames from being overwritten')
 
     def initialize(app, options_hash = {}, &block)
       super
