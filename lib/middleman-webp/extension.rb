@@ -65,7 +65,7 @@ module Middleman
     rescue Shell::Error::CommandNotFound => e
       builder.trigger :error, "ERROR: #{e.message} Please install cwebp and "\
         'gif2webp commandline tools first.'
-      false
+      raise
     end
   end
 end
